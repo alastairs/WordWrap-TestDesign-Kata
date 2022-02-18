@@ -1,37 +1,43 @@
-package codingdojo;
+using System.Text;
+
+namespace CodingDojo;
 
 /**
  * Word Wrap Kata.
  * Copyright (c) 2011, Peter Kofler, licensed under BSD License.
  * adapted from: http://www.code-cop.org/sourcecode/wordwrap/a20110716/WordWrapLoop.java
  */
-public class WordWrapKoflerLoop implements WordWrap {
+public class WordWrapKoflerLoop : IWordWrap
+{
+    private const char Blank = ' ';
 
-    private static final char BLANK = ' ';
-    private static final char NEWLINE = '\n';
-
-    public String wrap(String line, int maxLineLen) {
-        StringBuilder accumulator = new StringBuilder();
-        String remainingLine = line;
-        while (remainingLine.length() > maxLineLen) {
-
-            final int indexOfBlank = remainingLine.lastIndexOf(BLANK, maxLineLen);
-            final int split;
-            final int offset;
-            if (indexOfBlank > -1) {
+    public string Wrap(string line, int maxLineLen)
+    {
+        var accumulator = new StringBuilder();
+        var remainingLine = line;
+        while (remainingLine.Length > maxLineLen)
+        {
+            var indexOfBlank = remainingLine.LastIndexOf(Blank, maxLineLen);
+            int split;
+            int offset;
+            if (indexOfBlank > -1)
+            {
                 split = indexOfBlank;
                 offset = 1;
-            } else {
+            }
+            else
+            {
                 split = maxLineLen;
                 offset = 0;
             }
 
-            accumulator.append(remainingLine.substring(0, split));
-            accumulator.append(NEWLINE);
-            remainingLine = remainingLine.substring(split + offset);
+            accumulator.Append(remainingLine[..split]);
+            accumulator.Append(Environment.NewLine);
+            remainingLine = remainingLine[(split + offset)..];
         }
-        accumulator.append(remainingLine);
-        return accumulator.toString();
+
+        accumulator.Append(remainingLine);
+        return accumulator.ToString();
     }
 
     /*

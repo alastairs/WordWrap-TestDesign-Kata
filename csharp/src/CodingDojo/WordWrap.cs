@@ -1,5 +1,5 @@
-package codingdojo;
+namespace CodingDojo;
 
-public interface WordWrap {
-    String wrap(String line, int maxLineLen);
+public interface IWordWrap {
+    string Wrap(string line, int maxLineLen);
 }

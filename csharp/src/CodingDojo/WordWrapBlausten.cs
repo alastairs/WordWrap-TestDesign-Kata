@@ -1,52 +1,58 @@
-package codingdojo;
+namespace CodingDojo;
 
-import java.util.ArrayList;
+using System;
+using System.Collections.Generic;
 
 /**
  * This code is adapted from https://github.com/sblausten/word-wrap-kata
  */
-public class WordWrapBlausten implements WordWrap {
+public class WordWrapBlausten : IWordWrap
+{
+    public string Wrap(string text, int columnLength)
+    {
+        var textLength = text.Length;
+        if (textLength < columnLength) return text;
+        var charsArray = text.ToCharArray();
+        var textSections = new List<string>();
+        var sectionCount = textLength / columnLength;
+        var charIndex = 0;
 
-    public String wrap(String text, int columnLength) {
-        int textLength = text.length();
-        if(textLength < columnLength) return text;
-        char[] charsArray = text.toCharArray();
-        ArrayList<String> textSections = new ArrayList<String>();
-        int sectionCount = textLength / columnLength;
-        int charIndex = 0;
-
-        for (int i = 0; i < sectionCount; i++) {
-            String section = "";
-            int lengthTillLastSpace = charIndex + columnLength;
-            System.out.println("1st length " + lengthTillLastSpace);
-            while (charsArray[lengthTillLastSpace] != ' ') {
+        for (var i = 0; i < sectionCount; i++)
+        {
+            var section = "";
+            var lengthTillLastSpace = charIndex + columnLength;
+            Console.WriteLine("1st length " + lengthTillLastSpace);
+            while (charsArray[lengthTillLastSpace] != ' ')
+            {
                 lengthTillLastSpace -= 1;
             }
-            int charsInThisSection = lengthTillLastSpace - charIndex;
-            System.out.println("2nd length " + lengthTillLastSpace);
-            for (int n = 0; n < charsInThisSection; n++) {
+            var charsInThisSection = lengthTillLastSpace - charIndex;
+            Console.WriteLine("2nd length " + lengthTillLastSpace);
+            for (var n = 0; n < charsInThisSection; n++)
+            {
                 section += charsArray[charIndex];
                 charIndex++;
             }
-            System.out.println("Index " + charIndex);
-            //System.out.println(textSection);
-            textSections.add(section.trim());
+            Console.WriteLine("Index " + charIndex);
+            textSections.Add(section.Trim());
         }
-        System.out.println("Near index " + charIndex);
-        System.out.println("Text Length " + textLength);
-        int remainingChars = textLength % charIndex;
-        System.out.println("Remaining " + remainingChars);
-        if(remainingChars > 0) {
-            String section = "";
-            for (int n = 0; n < remainingChars; n++) {
+        Console.WriteLine("Near index " + charIndex);
+        Console.WriteLine("Text Length " + textLength);
+        var remainingChars = textLength % charIndex;
+        Console.WriteLine("Remaining " + remainingChars);
+        if (remainingChars > 0)
+        {
+            var section = "";
+            for (var n = 0; n < remainingChars; n++)
+            {
                 section += charsArray[charIndex];
                 charIndex++;
             }
-            System.out.println("Final index " + charIndex);
-            System.out.println("TotalChars " + charsArray.length);
-            textSections.add(section.trim());
+            Console.WriteLine("Final index " + charIndex);
+            Console.WriteLine("TotalChars " + charsArray.Length);
+            textSections.Add(section.Trim());
         }
-        System.out.println(textSections.get(1));
-        return text.join("\n", textSections);
+        Console.WriteLine(textSections[1]);
+        return string.Join(Environment.NewLine, textSections);
     }
 }

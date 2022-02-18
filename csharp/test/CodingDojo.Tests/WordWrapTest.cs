@@ -1,31 +1,25 @@
-package codingdojo;
+using System.Collections.Generic;
+using NUnit.Framework;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+namespace CodingDojo.Tests;
 
-import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-
-public class WordWrapTest {
-
-    static Stream<WordWrap> wrapperProvider() {
-        return Stream.of(
-                new WordWrapKoflerLoop(),
-                new WordWrapKoflerLoopBuffer(),
-                new WordWrapKoflerRegex(),
-                new WordWrapBlausten(),
-                new WordWrapBlausten2(),
-                new WordWrapMartin()
-        );
-    }
+public class WordWrapTest
+{
+    private static IEnumerable<IWordWrap> Wrappers() =>
+        new IWordWrap[]
+        {
+            new WordWrapKoflerLoop(),
+            new WordWrapKoflerLoopBuffer(),
+            new WordWrapKoflerRegex(),
+            new WordWrapBlausten(),
+            new WordWrapBlausten2(),
+            new WordWrapMartin()
+        };
 
     // TODO: write some more test cases like this one
-    @ParameterizedTest
-    @MethodSource("wrapperProvider")
-    public void testWrapEmptyString(WordWrap wrapper) {
-        assertEquals("", wrapper.wrap("", 1));
+    [TestCaseSource(nameof(Wrappers))]
+    public void WrapEmptyString(IWordWrap wrapper)
+    {
+        Assert.AreEqual("", wrapper.Wrap("", 1));
     }
-
 }
